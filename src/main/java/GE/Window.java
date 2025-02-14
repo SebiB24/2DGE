@@ -67,6 +67,11 @@ public class Window {
             throw new IllegalStateException("Unable to create GLFW window");
         }
 
+        glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
+        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
+        glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
+
         //Make the OpenGl context current
         glfwMakeContextCurrent(glfwWindow);
 
@@ -94,6 +99,10 @@ public class Window {
 
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
+
+            if(KeyListener.isKeyPressed(GLFW_KEY_SPACE)){
+                System.out.println(" SPACE pressed ");
+            }
 
             // Swaping the fornt and back buffers (current displayed frame with newly generated frame)
             glfwSwapBuffers(glfwWindow);
