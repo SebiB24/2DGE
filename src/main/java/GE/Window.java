@@ -16,7 +16,6 @@ public class Window {
     private String title;
     private long glfwWindow;
     public float r, g, b, a;
-    private boolean fadeToBlack = false;
 
     private static Window window = null;
 
@@ -26,9 +25,11 @@ public class Window {
         switch (SceneIndex) {
             case 0:
                 currentScene = new LevelEditorScene();
+                currentScene.init();
                 break;
             case 1:
                 currentScene = new LevelScene();
+                currentScene.init();
                 break;
             default:
                 assert false: "Unknown scene: " + SceneIndex;
@@ -137,6 +138,7 @@ public class Window {
             endTime = Time.getTime();
             dt = endTime - beginTime;
             beginTime = endTime;
+
         }
     }
 }
