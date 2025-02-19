@@ -2,6 +2,8 @@ package GE;
 
 public abstract class Scene {
 
+    protected Camera camera;
+
     public Scene() {
 
     }
