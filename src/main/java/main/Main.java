@@ -1,5 +1,6 @@
+package main;
+
 import GE.Window;
-import java.awt.*;
 
 
 public class Main {
@@ -9,4 +10,4 @@ public class Main {
     }
 }
 
-/// Time stamp: 02:03:00
+/// Time stamp: 02:24:30
