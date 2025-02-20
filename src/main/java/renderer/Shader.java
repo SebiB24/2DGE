@@ -1,6 +1,6 @@
 package renderer;
 
-import org.joml.Matrix4f;
+import org.joml.*;
 import org.lwjgl.BufferUtils;
 
 import java.io.IOException;
@@ -18,6 +18,8 @@ public class Shader {
     private String vertexShaderSource;
     private String fragmentShaderSource;
     private String filePath;
+
+    private boolean beeingUsed = false;
 
 
     public Shader(String filePath){
@@ -69,10 +71,10 @@ public class Shader {
 
         int vertexID;
         int fragmentID;
+
         //======================================
         //Compile and link shaders
         //======================================
-
         //Load and compile the vertex shader
         vertexID = glCreateShader(GL_VERTEX_SHADER);
 
@@ -126,18 +128,64 @@ public class Shader {
     }
 
     public void use(){
-        //Bind shader program
-        glUseProgram(shaderProgramID);
+        if(!beeingUsed){
+            //Bind shader program
+            glUseProgram(shaderProgramID);
+            beeingUsed = true;
+        }
     }
 
     public void detach(){
         glUseProgram(0);
+        beeingUsed = false;
     }
 
+    //======================================================================================
+    // Uploads
+    //======================================================================================
     public void uploadMat4f(String varName, Matrix4f mat4){
         int varLocation = glGetUniformLocation(shaderProgramID, varName);
-        FloatBuffer matBuffer = BufferUtils.createFloatBuffer(16);
-        mat4.get(matBuffer);
-        glUniformMatrix4fv(varLocation, false, matBuffer);
+        use(); //make sure we are using the shader
+        FloatBuffer matBuffer = BufferUtils.createFloatBuffer(16);//creating a float buffer
+        mat4.get(matBuffer); //putting the matrix into a buffer
+        glUniformMatrix4fv(varLocation, false, matBuffer); //adding the value to the shader uniform (variable)
+    }
+
+    public void uploadMat3f(String varName, Matrix3f mat3){
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        FloatBuffer matBuffer = BufferUtils.createFloatBuffer(9);
+        mat3.get(matBuffer);
+        glUniformMatrix3fv(varLocation, false, matBuffer);
+    }
+
+    public void uploadVec4f(String varName, Vector4f vec){
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        glUniform4f(varLocation, vec.x, vec.y, vec.z, vec.w);
+    }
+
+    public void uploadVec3f(String varName, Vector3f vec){
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        glUniform3f(varLocation, vec.x, vec.y, vec.z);
+    }
+
+    public void uploadVec2f(String varName, Vector2f vec){
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        glUniform2f(varLocation, vec.x, vec.y);
+    }
+
+    public void uploadFloat(String varName, float val){
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        glUniform1f(varLocation, val);
+    }
+
+    public void uploadInt(String varName, int val){
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        glUniform1i(varLocation, val);
     }
 }

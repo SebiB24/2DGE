@@ -16,11 +16,11 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public class LevelEditorScene extends Scene{
 
     private float[] vertexArray = {
-      // position             // color
-       100.5f, 0.5f, 0.0f,      1.0f, 0.0f, 0.0f, 1.0f, //BR 0
-      0.5f,  100.5f, 0.0f,      0.0f, 1.0f, 0.0f, 1.0f, //TL 1
-       100.5f,  100.5f, 0.0f,      0.0f, 0.0f, 1.0f, 1.0f, //TR 2
-      0.5f, 0.5f, 0.0f,      1.0f, 1.0f, 0.0f, 1.0f, //BL 3
+       // position                 // color
+       100.5f, 0.5f,   0.0f,       1.0f, 0.0f, 0.0f, 1.0f, //BR 0
+       0.5f,   100.5f, 0.0f,       0.0f, 1.0f, 0.0f, 1.0f, //TL 1
+       100.5f, 100.5f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f, //TR 2
+       0.5f,   0.5f,   0.0f,       1.0f, 1.0f, 0.0f, 1.0f, //BL 3
     };
 
     private int[] elementArray = {
@@ -46,7 +46,9 @@ public class LevelEditorScene extends Scene{
         //======================================
         //Generate VAO, VBO, EBO buffer objects, and send to GPU
         //======================================
+
         vaoID = glGenVertexArrays();
+
         glBindVertexArray(vaoID);  //Binding the created vao so that the next lines apply to it
 
         //Create a float buffer where we put the vertexArray
@@ -87,11 +89,13 @@ public class LevelEditorScene extends Scene{
     public void update(float dt) {
 
         camera.position.x -= dt * 50.0f;
+        camera.position.y -= dt * 20.0f;
 
         defaultShader.use();
 
         defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
         defaultShader.uploadMat4f("uView", camera.getViewMatrix());
+        defaultShader.uploadFloat("uTime", Time.getTime());
 
         //Bind VAO that we are using
         glBindVertexArray(vaoID);
