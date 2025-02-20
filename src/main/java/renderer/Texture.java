@@ -1,0 +1,64 @@
+package renderer;
+
+import org.lwjgl.BufferUtils;
+
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.stb.STBImage.stbi_image_free;
+import static org.lwjgl.stb.STBImage.stbi_load;
+
+public class Texture {
+    private String filepath;
+    private int textID;
+
+    public Texture(String filePath) {
+        this.filepath = filePath;
+
+        //Generate texture on the GPU
+        textID = glGenTextures();
+        //Binding the texture
+        glBindTexture(GL_TEXTURE_2D, textID);
+
+        //==================================
+        //Set texture parameters
+        //==================================
+        //Repeat image in both directions
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); //wraps horizontally (on x)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); //wraps vertically   (on y)
+
+        //When stretching the image, pixelate
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+        //When shrinking the image, pixelate
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+        //===============================
+        //Loading image
+        //===============================
+        //Load image from file
+        IntBuffer width = BufferUtils.createIntBuffer(1);
+        IntBuffer height = BufferUtils.createIntBuffer(1);
+        IntBuffer channels = BufferUtils.createIntBuffer(1);
+        ByteBuffer image = stbi_load(filepath, width, height, channels, 0);
+
+        //Load image to the GPU
+        if(image != null){
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width.get(0), height.get(0),
+                    0, GL_RGB, GL_UNSIGNED_BYTE, image);
+        }else{
+            assert false: "Error: (Texture) Could not load image '" + filepath + "'";
+        }
+
+        stbi_image_free(image);
+    }
+
+    public void bind() {
+        glBindTexture(GL_TEXTURE_2D, textID);
+    }
+
+    public void unbind() {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+}
