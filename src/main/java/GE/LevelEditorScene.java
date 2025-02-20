@@ -17,11 +17,11 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public class LevelEditorScene extends Scene{
 
     private float[] vertexArray = {
-       // position                 // color
-       100.5f, 0.5f,   0.0f,       1.0f, 0.0f, 0.0f, 1.0f,     1, 0,//BR 0
-       0.5f,   100.5f, 0.0f,       0.0f, 1.0f, 0.0f, 1.0f,     0, 1,//TL 1
-       100.5f, 100.5f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f,     1, 1,//TR 2
-       0.5f,   0.5f,   0.0f,       1.0f, 1.0f, 0.0f, 1.0f,     0, 0 //BL 3
+       // position                 // color                    //UV coordinates
+       100.5f, 0.5f,   0.0f,       1.0f, 0.0f, 0.0f, 1.0f,     1, 1,//BR 0
+       0.5f,   100.5f, 0.0f,       0.0f, 1.0f, 0.0f, 1.0f,     0, 0,//TL 1
+       100.5f, 100.5f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f,     1, 0,//TR 2
+       0.5f,   0.5f,   0.0f,       1.0f, 1.0f, 0.0f, 1.0f,     0, 1 //BL 3
     };
 
     private int[] elementArray = {
@@ -45,7 +45,7 @@ public class LevelEditorScene extends Scene{
         defaultShader = new Shader("assets/shaders/default.glsl");
         defaultShader.compileAndLink();
 
-        this.testTexture = new Texture("assets/images/testImage.jpg");
+        this.testTexture = new Texture("assets/images/testImage.png");
 
         //======================================
         //Generate VAO, VBO, EBO buffer objects, and send to GPU
@@ -88,7 +88,7 @@ public class LevelEditorScene extends Scene{
         glEnableVertexAttribArray(1);
 
         glVertexAttribPointer(2, uvSize, GL_FLOAT, false, vertexSizeBytes, (positionsSize + colorsSize) * Float.BYTES);
-        glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
 
     }
 
