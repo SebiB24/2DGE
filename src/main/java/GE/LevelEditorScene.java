@@ -1,12 +1,14 @@
 package GE;
 
+import components.FontRenderer;
+import components.SpriteRenderer;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import renderer.Shader;
 import renderer.Texture;
 import util.Time;
 
-import java.awt.event.KeyEvent;
+import java.awt.*;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
@@ -33,6 +35,8 @@ public class LevelEditorScene extends Scene{
 
     private Shader defaultShader;
     private Texture testTexture;
+    GameObject testObject;
+    private boolean firsTime = true;
 
     public LevelEditorScene() {
 
@@ -40,6 +44,12 @@ public class LevelEditorScene extends Scene{
 
     @Override
     public void init() {
+        System.out.println("Creating 'test object'");
+        this.testObject = new GameObject("test object");
+        this.testObject.addComponent(new SpriteRenderer());
+        this.testObject.addComponent(new FontRenderer());
+        this.addGameObjectToScene(this.testObject);
+
         this.camera = new Camera(new Vector2f());
 
         defaultShader = new Shader("assets/shaders/default.glsl");
@@ -125,5 +135,16 @@ public class LevelEditorScene extends Scene{
         glBindVertexArray(0);
         defaultShader.detach();
 
+        if(firsTime) {
+            System.out.println("Creating game object!");
+            GameObject testObject2 = new GameObject("test object 2");
+            testObject2.addComponent(new SpriteRenderer());
+            this.addGameObjectToScene(testObject2);
+            firsTime = false;
+        }
+
+        for(GameObject go : this.gameObjects){
+            go.update(dt);
+        }
     }
 }
