@@ -133,7 +133,7 @@ public class RenderBatch {
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
 
-        glDrawElements(GL_TRIANGLES, numSprites * 6, GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLES, this.numSprites * 6, GL_UNSIGNED_INT, 0); //GL_UNSIGNED_INT not GL_UNSIGNED_SHORT
 
         //Unbind everything
         glDisableVertexAttribArray(0);
