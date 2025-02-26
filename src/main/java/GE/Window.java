@@ -127,7 +127,6 @@ public class Window {
         float dt = -1.0f;
 
         while(!glfwWindowShouldClose(glfwWindow)){
-            System.out.println(1/dt);
 
             // Poll events
             glfwPollEvents();
