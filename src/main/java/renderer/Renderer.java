@@ -2,6 +2,7 @@ package renderer;
 
 import GE.GameObject;
 import components.SpriteRenderer;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,12 @@ public class Renderer {
         boolean added = false;
         for(RenderBatch batch : batches){
             if(batch.hasRoom()){
-                batch.addSprite(sprite);
-                added = true;
-                break;
+                Texture tex = sprite.getTexture();
+                if(tex == null || batch.hasTexture(tex) || batch.hasTextureRoom()){
+                    batch.addSprite(sprite);
+                    added = true;
+                    break;
+                }
             }
         }
         if(!added){

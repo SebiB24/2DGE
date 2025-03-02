@@ -22,7 +22,7 @@ public class SpriteRenderer extends Component {
 
     public SpriteRenderer(Texture texture) {
         this.texture = texture;
-        this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+        this.color = new Vector4f(1, 1, 1, 1);
     }
 
     @Override

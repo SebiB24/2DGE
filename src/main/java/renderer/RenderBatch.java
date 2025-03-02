@@ -36,8 +36,9 @@ public class RenderBatch {
     private int numSprites;
     private boolean hasRoom;
     private float[] vertices;
+
     private List<Texture> textures;
-    private int[] texSlots = {1,2,3,4,5,6,7};
+    private int[] texSlots = {0,1,2,3,4,5,6,7};
 
     private int vaoID, vboID;
     private int maxBatchSize;
@@ -162,7 +163,7 @@ public class RenderBatch {
     }
 
     public void render(){
-        // For now, we will re-buffer all data every frame
+        // we will re-buffer all data every frame
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 
@@ -225,5 +226,12 @@ public class RenderBatch {
         return this.hasRoom;
     }
 
+    public boolean hasTextureRoom(){
+        return this.textures.size() < 8;
+    }
+
+    public boolean hasTexture(Texture texture){
+        return this.textures.contains(texture);
+    }
 
 }
