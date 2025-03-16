@@ -80,3 +80,6 @@ This reduces memory usage and improves **performance**.
 ## 📢 Notes  
 ⚠️ This project is a **work in progress** and is meant for learning. It is **not** optimized for production use.  
 
+## 🖥️ What its currently able to display
+![image](https://github.com/user-attachments/assets/b0e928f5-85ae-49e9-9f48-32761a30b923)
+
