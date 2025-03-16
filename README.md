@@ -8,11 +8,11 @@ This engine is designed for efficient **sprite rendering**, **shader management*
 
 ## ✨ Features  
 
-✔ **Component-Based Architecture** – Reusable, modular components for game objects.  
-✔ **Batch Rendering** – Optimized rendering using **single-draw-call batching**.  
-✔ **Shader Management** – Runtime **compilation and linking** of GLSL shaders.  
-✔ **Texture Management** – Efficient **loading, binding, and caching** of textures.  
-✔ **Asset Pooling** – Centralized **cache** for shaders, textures, and spritesheets.  
+✔ **Component-Based Architecture** 
+✔ **Batch Rendering**
+✔ **Shader Management**
+✔ **Texture Management**
+✔ **Asset Pooling**
 
 ---
 
