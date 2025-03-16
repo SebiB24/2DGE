@@ -80,4 +80,3 @@ This reduces memory usage and improves **performance**.
 ## 📢 Notes  
 ⚠️ This project is a **work in progress** and is meant for learning. It is **not** optimized for production use.  
 
-💡 **Want to contribute?** Feel free to submit pull requests or report issues!  
