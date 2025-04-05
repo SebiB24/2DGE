@@ -2,6 +2,7 @@ package renderer;
 
 import GE.Window;
 import components.SpriteRenderer;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import util.AssetPool;
@@ -14,7 +15,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class RenderBatch {
+public class RenderBatch implements Comparable<RenderBatch> {
     //Vertex
     //=========
     //Pos               Color                           TexCoords       TextureID
@@ -44,11 +45,14 @@ public class RenderBatch {
     private int maxBatchSize;
     private Shader shader;
 
-    public RenderBatch(int maxBatchSize) {
+    private int zIndex;
+
+    public RenderBatch(int maxBatchSize, int zIndex) {
         shader = AssetPool.getShader("assets/shaders/default.glsl");
         shader.compileAndLink();
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
+        this.zIndex = zIndex;
 
         //4 vertices quads
         vertices = new float[maxBatchSize * 4 * VERTEX_SIZE];
@@ -245,4 +249,12 @@ public class RenderBatch {
         return this.textures.contains(texture);
     }
 
+    public int getZIndex(){
+        return this.zIndex;
+    }
+
+    @Override
+    public int compareTo(@NotNull RenderBatch o) {
+        return Integer.compare(this.zIndex, o.getZIndex());
+    }
 }
